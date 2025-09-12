@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -14,19 +16,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class GameScreen implements Screen{
 	private Viewport viewport;
 	private SpriteBatch spriteBatch;
-	private static HashMap<String, Texture> textures = new HashMap<>();
 	private Sprite ak47;
+	private ShapeRenderer shapeRenderer;
 	
 	public GameScreen() {
-		viewport = new FitViewport(800, 600);
+		viewport = new FitViewport(1024, 768);
 		
+		shapeRenderer = new ShapeRenderer();
 		spriteBatch = new SpriteBatch();
-		Texture texture = new Texture("AK47.png");
-		textures.put("AK47", texture);
-		ak47 = new Sprite(textures.get("AK47"));
-		ak47.setSize(300,600);
-		ak47.setPosition((viewport.getWorldWidth() - ak47.getWidth()) /2,
-		(viewport.getWorldHeight() - ak47.getHeight()) / 2);
+		TextureManager.load("AK47", "AK47.png");
+		ak47 = new Sprite(TextureManager.get("AK47"));
+		ak47.setSize(100,250);
+		ak47.setPosition(1, 0);
 	}
 	
 	@Override
@@ -50,13 +51,6 @@ public class GameScreen implements Screen{
 	public void hide() {
 		
 	}
-	@Override
-	public void dispose() {
-	    spriteBatch.dispose();
-	    for (Texture t : textures.values()) {
-	        t.dispose();
-	    }
-	}
 	public void draw() {
 		ScreenUtils.clear(Color.BLACK);
 		viewport.apply();
@@ -70,5 +64,15 @@ public class GameScreen implements Screen{
 		ak47.draw(spriteBatch);
 		
 		spriteBatch.end();
+		
+		shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+		shapeRenderer.setColor(Color.RED);
+		shapeRenderer.rect(ak47.getX(), ak47.getY(), ak47.getWidth(), ak47.getHeight());
+		shapeRenderer.end();
+	}
+	@Override
+	public void dispose() {
+	    spriteBatch.dispose();
 	}
 }
