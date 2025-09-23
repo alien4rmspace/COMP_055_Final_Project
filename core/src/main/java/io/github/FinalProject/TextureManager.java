@@ -6,18 +6,27 @@ import com.badlogic.gdx.graphics.Texture;
 import java.util.Map;
 
 public class TextureManager {
-	// Static makes it so only one object can be created and it's shared (Global).
-	// Use TextureManager. to call any of the functions in this class.
+    // This is a unique class. Only one of this class will exist at all times and
+    // can be accessed from anywhere in our project by calling TextureManager.
+    // You can think of it as a global Class.
 	private static final HashMap<String, Texture> textureMap = new HashMap<>();
-	
-	public static void load(String key, String texture) {
-		textureMap.put(key, new Texture(texture));
+
+    public TextureManager(){
+        load("character3", "assets/Characters/Premade_Character_48x48_03.png");
+
+        System.out.println("Successfully loaded textures in TextureManager");
+    }
+
+	public static void load(String key, String texturePath) {
+
+        textureMap.put(key, new Texture(texturePath));
 	}
-	
+
 	public static Texture get(String key) {
-		return textureMap.get(key);
+
+        return textureMap.get(key);
 	}
-	
+
 	public void dispose() {
 		for (Map.Entry<String, Texture> entry : textureMap.entrySet()) {
 			entry.getValue().dispose();
