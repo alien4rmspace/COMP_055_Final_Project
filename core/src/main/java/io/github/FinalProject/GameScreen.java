@@ -20,33 +20,17 @@ public class GameScreen implements Screen{
 	private Viewport viewport;
 	private SpriteBatch spriteBatch;
 	private Sprite ak47;
-	private ShapeRenderer shapeRenderer;
-    private TextureRegion[][] tmp;
-    private TextureRegion[] frames;
-    private Animation<TextureRegion> walkAnimation;
     private TextureManager textureManager;
     private float stateTime = 0f;
 
 	public GameScreen() {
         new TextureManager();
+        new AnimationManager();
 		viewport = new FitViewport(1024, 768);
 
-		shapeRenderer = new ShapeRenderer();
 		spriteBatch = new SpriteBatch();
-		TextureManager.load("AK47", "AK47.png");
-		ak47 = new Sprite(TextureManager.get("character3"));
-		ak47.setSize(100,250);
-		ak47.setPosition(1, 0);
 
-        tmp = TextureRegion.split(TextureManager.get("character3"), 48, 96);
-        frames = new TextureRegion[6];
-
-        for (int i = 0; i < 6; i++){
-            frames[i] = tmp[2][i];
-        }
-
-        walkAnimation = new Animation<>(0.1f, frames);
-        float stateTime = 0f;
+        Player player = new Player(50, 50);
 
 	}
 
@@ -57,14 +41,11 @@ public class GameScreen implements Screen{
 
 	// The render function is basically your while loop.
 	public void render(float delta) {
-        stateTime += Gdx.graphics.getDeltaTime();
-        TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-        spriteBatch.begin();
-        spriteBatch.draw(currentFrame, 50, 50);
-        spriteBatch.end();
+        this.update(delta);
+        this.draw();
 	}
 	public void resize(int width, int height) {
-		viewport.update(width, height, true);
+        viewport.update(width, height, true);
 	}
 	public void pause() {
 
@@ -75,25 +56,18 @@ public class GameScreen implements Screen{
 	public void hide() {
 
 	}
+    public void update(float delta){
+        // delta is a built in function in libgdx which grabs the time in between each execution.
+        // Required to make animations in sync between different computer systems due to hardware speed inconsistency.
+        stateTime += delta;
+    }
 	public void draw() {
-		ScreenUtils.clear(Color.BLACK);
-		viewport.apply();
+        ScreenUtils.clear(Color.BLACK);
+        TextureRegion currentFrame = AnimationManager.get("player.walking").getKeyFrame(stateTime, true);
 
-		spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-		spriteBatch.begin();
-
-		float worldWidth = viewport.getWorldWidth();
-		float worldHeight = viewport.getWorldHeight();
-
-		ak47.draw(spriteBatch);
-
-		spriteBatch.end();
-
-		shapeRenderer.setProjectionMatrix(spriteBatch.getProjectionMatrix());
-		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-		shapeRenderer.setColor(Color.RED);
-		shapeRenderer.rect(ak47.getX(), ak47.getY(), ak47.getWidth(), ak47.getHeight());
-		shapeRenderer.end();
+        spriteBatch.begin();
+        spriteBatch.draw(currentFrame, 50, 50);
+        spriteBatch.end();
 	}
 	@Override
 	public void dispose() {
