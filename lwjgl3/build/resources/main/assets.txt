@@ -1,0 +1,3 @@
+.gitkeep
+AK47.png
+Characters/Premade_Character_48x48_03.png
