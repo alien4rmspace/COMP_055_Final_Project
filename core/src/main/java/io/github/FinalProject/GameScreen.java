@@ -22,6 +22,7 @@ public class GameScreen implements Screen{
 	private Sprite ak47;
     private TextureManager textureManager;
     private float stateTime = 0f;
+    private Player player;
 
 	public GameScreen() {
         new TextureManager();
@@ -30,7 +31,7 @@ public class GameScreen implements Screen{
 
 		spriteBatch = new SpriteBatch();
 
-        Player player = new Player(50, 50);
+        player = new Player(50, 50);
 
 	}
 
@@ -63,10 +64,9 @@ public class GameScreen implements Screen{
     }
 	public void draw() {
         ScreenUtils.clear(Color.BLACK);
-        TextureRegion currentFrame = AnimationManager.get("player.walking").getKeyFrame(stateTime, true);
 
         spriteBatch.begin();
-        spriteBatch.draw(currentFrame, 50, 50);
+        player.draw(stateTime, spriteBatch);
         spriteBatch.end();
 	}
 	@Override
