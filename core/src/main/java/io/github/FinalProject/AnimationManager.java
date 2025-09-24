@@ -22,8 +22,8 @@ public class AnimationManager {
     }
 
     public static TextureRegion[] parseRegion(Texture texture, int frameWidth, int frameHeight, int row, int frameCount){
-        int regionWidth = 48;   // Width of the region we want to show on screen.
-        int regionHeight = 96;  // Height of the region we want to show on screen.
+        int regionWidth = frameWidth;   // Width of the pixel region we want to cut out of png sheet.
+        int regionHeight = frameHeight;  // Height of the pixel region we want to cut out of png sheet.
 
         TextureRegion[][] tmp = TextureRegion.split(texture, regionWidth, regionHeight);
         TextureRegion[] frames = new TextureRegion[frameCount];
