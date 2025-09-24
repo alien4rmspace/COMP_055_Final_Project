@@ -12,7 +12,7 @@ public class TextureManager {
 	private static final HashMap<String, Texture> textureMap = new HashMap<>();
 
     public TextureManager(){
-        load("character3", "assets/Characters/Premade_Character_48x48_03.png");
+        load("character3", "Characters/Premade_Character_48x48_03.png");
 
         System.out.println("Successfully loaded textures in TextureManager");
     }
@@ -22,10 +22,6 @@ public class TextureManager {
         textureMap.put(key, new Texture(texturePath));
 	}
 
-	public static Texture get(String key) {
-
-        return textureMap.get(key);
-	}
 
 	public void dispose() {
 		for (Map.Entry<String, Texture> entry : textureMap.entrySet()) {
@@ -33,4 +29,9 @@ public class TextureManager {
 		}
 		textureMap.clear();
 	}
+
+    public static Texture get(String key) {
+
+        return textureMap.get(key);
+    }
 }
