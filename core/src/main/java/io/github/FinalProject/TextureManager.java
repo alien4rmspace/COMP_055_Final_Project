@@ -23,12 +23,12 @@ public class TextureManager {
 	}
 
 
-	public void dispose() {
-		for (Map.Entry<String, Texture> entry : textureMap.entrySet()) {
-			entry.getValue().dispose();
-		}
-		textureMap.clear();
-	}
+//	public void dispose() {
+//		for (Map.Entry<String, Texture> entry : textureMap.entrySet()) {
+//			entry.getValue().dispose();
+//		}
+//		textureMap.clear();
+//	}
 
     public static Texture get(String key) {
 
