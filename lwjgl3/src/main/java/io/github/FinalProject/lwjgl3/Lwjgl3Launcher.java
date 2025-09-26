@@ -6,9 +6,9 @@ import io.github.FinalProject.Main;
 
 /** Launches the desktop (LWJGL3) application. */
 public class Lwjgl3Launcher {
-	public static final int WINDOW_WIDTH = 1024;
-	public static final int WINDOW_LENGTH = 768;
-	
+	public static final int WINDOW_WIDTH = 1280;
+	public static final int WINDOW_LENGTH = 960;
+
     public static void main(String[] args) {
         if (StartupHelper.startNewJvmIfRequired()) return; // This handles macOS support and helps on Windows.
         createApplication();

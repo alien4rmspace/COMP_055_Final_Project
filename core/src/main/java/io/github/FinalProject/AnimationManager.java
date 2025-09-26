@@ -13,18 +13,24 @@ public class AnimationManager {
 
     public AnimationManager(){
         // Parse our sprite sheet in a 48 x 96 section starting at row 2, there are 6 animation frames in that row.
-        TextureRegion[] animationFrameRow = parseRegion(TextureManager.get("character3"), 48, 96, 2, 24);
-        TextureRegion[] animationFrames = Arrays.copyOfRange(animationFrameRow, 0, 6);
+        TextureRegion[] animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 0 , 6);
         load("player.walking.right", new Animation<>(0.1f, animationFrames));
-        animationFrames = Arrays.copyOfRange(animationFrameRow, 7, 12);
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 7, 12);
         load("player.walking.up", new Animation<>(0.1f, animationFrames));
-        animationFrames = Arrays.copyOfRange(animationFrameRow, 13, 18);
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 13 , 18);
         load("player.walking.left", new Animation<>(0.1f, animationFrames));
-        animationFrames = Arrays.copyOfRange(animationFrameRow, 19, 24);
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 19 , 24);
         load("player.walking.down", new Animation<>(0.1f, animationFrames));
 
-        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 6);
-        load("player.standing", new Animation<>(0.1f, animationFrames));
+
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 0, 6);
+        load("player.standing.right", new Animation<>(0.1f, animationFrames));
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 7, 12);
+        load("player.standing.up", new Animation<>(0.1f, animationFrames));
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 13, 18);
+        load("player.standing.left", new Animation<>(0.1f, animationFrames));
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 19, 24);
+        load("player.standing.down", new Animation<>(0.1f, animationFrames));
 
         System.out.println("Successfully loaded animations in AnimationManager");
     }
@@ -33,15 +39,13 @@ public class AnimationManager {
         animations.put(key, animation);
     }
 
-    public static TextureRegion[] parseRegion(Texture texture, int frameWidth, int frameHeight, int row, int frameCount){
-        int regionWidth = 48;   // Width of the region we want to show on screen.
-        int regionHeight = 96;  // Height of the region we want to show on screen.
+    public static TextureRegion[] parseRegion(Texture texture, int frameWidth, int frameHeight, int row, int startingColumn, int endingColumn){
+        TextureRegion[][] tmp = TextureRegion.split(texture, frameWidth, frameHeight);
 
-        TextureRegion[][] tmp = TextureRegion.split(texture, regionWidth, regionHeight);
-        TextureRegion[] frames = new TextureRegion[frameCount];
+        TextureRegion[] frames = new TextureRegion[endingColumn - startingColumn];
 
-        for (int i = 0; i < frameCount; i++){
-            frames[i] = tmp[row][i];
+        for (int i = 0; i < frames.length; i++){
+            frames[i] = tmp[row][startingColumn + i];
         }
         return frames;
     }
