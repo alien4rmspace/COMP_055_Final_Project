@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class AnimationManager {
@@ -12,8 +13,15 @@ public class AnimationManager {
 
     public AnimationManager(){
         // Parse our sprite sheet in a 48 x 96 section starting at row 2, there are 6 animation frames in that row.
-        TextureRegion[] animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 6);
-        load("player.walking", new Animation<>(0.1f, animationFrames));
+        TextureRegion[] animationFrameRow = parseRegion(TextureManager.get("character3"), 48, 96, 2, 24);
+        TextureRegion[] animationFrames = Arrays.copyOfRange(animationFrameRow, 0, 6);
+        load("player.walking.right", new Animation<>(0.1f, animationFrames));
+        animationFrames = Arrays.copyOfRange(animationFrameRow, 7, 12);
+        load("player.walking.up", new Animation<>(0.1f, animationFrames));
+        animationFrames = Arrays.copyOfRange(animationFrameRow, 13, 18);
+        load("player.walking.left", new Animation<>(0.1f, animationFrames));
+        animationFrames = Arrays.copyOfRange(animationFrameRow, 19, 24);
+        load("player.walking.down", new Animation<>(0.1f, animationFrames));
 
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 6);
         load("player.standing", new Animation<>(0.1f, animationFrames));
