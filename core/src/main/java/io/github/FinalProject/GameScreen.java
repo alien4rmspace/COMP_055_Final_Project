@@ -22,6 +22,7 @@ public class GameScreen implements Screen{
 	private Sprite ak47;
     private TextureManager textureManager;
     private float stateTime = 0f;
+    private Player player;
 
 	public GameScreen() {
         new TextureManager();
@@ -30,7 +31,7 @@ public class GameScreen implements Screen{
 
 		spriteBatch = new SpriteBatch();
 
-        Player player = new Player(50, 50);
+        player = new Player(50, 50);
 
 	}
 
@@ -60,13 +61,13 @@ public class GameScreen implements Screen{
         // delta is a built in function in libgdx which grabs the time in between each execution.
         // Required to make animations in sync between different computer systems due to hardware speed inconsistency.
         stateTime += delta;
+        player.update(delta);
     }
 	public void draw() {
         ScreenUtils.clear(Color.BLACK);
-        TextureRegion currentFrame = AnimationManager.get("player.walking").getKeyFrame(stateTime, true);
 
         spriteBatch.begin();
-        spriteBatch.draw(currentFrame, 50, 50);
+        player.draw(spriteBatch);
         spriteBatch.end();
 	}
 	@Override
