@@ -8,7 +8,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class Player {
     private Texture texture;
     private Animation<TextureRegion> animation;
+
+    private CharacterState currentState = CharacterState.IDLE;
+
     private float x, y;
+    private float speed = 200f;
     private float stateTime = 0;
 
     public Player(float x, float y){
@@ -26,5 +30,26 @@ public class Player {
 
     public void update(float delta){
         this.stateTime += delta;
+
+        if(UserInputs.isUpPressed()){
+            this.y += this.speed * delta;
+        }
+        if(UserInputs.isDownPressed()){
+            this.y -= this.speed * delta;
+        }
+        if(UserInputs.isLeftPressed()){
+            this.x -= this.speed * delta;
+        }
+        if(UserInputs.isRightPressed()){
+            this.x += this.speed * delta;
+        }
+    }
+
+    public void changeState(CharacterState newState){
+        this.currentState = newState;
+    }
+
+    public CharacterState getState(CharacterState newState){
+        return this.currentState;
     }
 }
