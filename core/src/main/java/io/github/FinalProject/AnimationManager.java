@@ -11,8 +11,12 @@ public class AnimationManager {
     private static final HashMap<String, Animation<TextureRegion>> animations = new HashMap<>();
 
     public AnimationManager(){
+        // Parse our sprite sheet in a 48 x 96 section starting at row 2, there are 6 animation frames in that row.
         TextureRegion[] animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 6);
         load("player.walking", new Animation<>(0.1f, animationFrames));
+
+        animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 6);
+        load("player.standing", new Animation<>(0.1f, animationFrames));
 
         System.out.println("Successfully loaded animations in AnimationManager");
     }
