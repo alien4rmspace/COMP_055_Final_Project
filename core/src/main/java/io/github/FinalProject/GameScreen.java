@@ -61,12 +61,13 @@ public class GameScreen implements Screen{
         // delta is a built in function in libgdx which grabs the time in between each execution.
         // Required to make animations in sync between different computer systems due to hardware speed inconsistency.
         stateTime += delta;
+        player.update(delta);
     }
 	public void draw() {
         ScreenUtils.clear(Color.BLACK);
 
         spriteBatch.begin();
-        player.draw(stateTime, spriteBatch);
+        player.draw(spriteBatch);
         spriteBatch.end();
 	}
 	@Override
