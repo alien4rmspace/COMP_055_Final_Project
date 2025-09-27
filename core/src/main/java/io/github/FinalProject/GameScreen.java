@@ -1,18 +1,10 @@
 package io.github.FinalProject;
 
-import java.util.HashMap;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g3d.Shader;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -27,6 +19,8 @@ public class GameScreen implements Screen{
     private final OrthogonalTiledMapRenderer renderer;
     private final Player player;
     private final OrthographicCamera camera;
+    private final CollisionManager collisionManager;
+    private final LootContainerManager lootContainerManager;
     private Sprite ak47;
     private TextureManager textureManager;
     private float stateTime = 0f;
@@ -35,19 +29,22 @@ public class GameScreen implements Screen{
         new TextureManager();
         new AnimationManager();
 
+
         tiledMap = new TmxMapLoader().load("TiledMaps/Testing.tmx");
-        System.out.println("Map loaded: " + (tiledMap != null));
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
+        collisionManager = new CollisionManager(tiledMap);
+        lootContainerManager = new LootContainerManager(tiledMap);
 
-        spriteBatch = new SpriteBatch();
-        player = new Player(50, 50);
-
+        // Set Camera up for 2d tile map.
         camera = new OrthographicCamera();
         viewport = new FitViewport(1296, 980, camera);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
         camera.position.set(0,0,0);
         camera.zoom = 1f;
         camera.update();
+
+        spriteBatch = new SpriteBatch();
+        player = new Player(50, 50, collisionManager);
     }
 
 	@Override

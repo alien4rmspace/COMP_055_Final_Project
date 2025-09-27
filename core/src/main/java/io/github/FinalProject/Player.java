@@ -4,9 +4,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class Player {
+    private final CollisionManager collisionManager;
+    private final Rectangle collisionRectangle;
+
     private Animation<TextureRegion> animation;
     private final Animation<TextureRegion> idleAnimationUp;
     private final Animation<TextureRegion> idleAnimationRight;
@@ -17,16 +24,19 @@ public class Player {
     private final Animation<TextureRegion> walkAnimationUp;
     private final Animation<TextureRegion> walkAnimationDown;
 
-    private CharacterState currentState;
-
     private final Vector2 position;
     private final Vector2 velocity;
     private final Vector2 lastDirection;
+    private final Vector2 knockback;
 
+    private CharacterState currentState;
     private float speed = 200f;
     private float stateTime = 0;
 
-    public Player(float x, float y){
+    public Player(float x, float y, CollisionManager collisionManager) {
+        this.collisionManager = collisionManager;
+        this.collisionRectangle = new Rectangle(x, y, 38, 42); // Soz for the magic numbers.
+
         this.idleAnimationUp = AnimationManager.get("player.standing.up");
         this.idleAnimationRight = AnimationManager.get("player.standing.right");
         this.idleAnimationLeft = AnimationManager.get("player.standing.left");
@@ -41,6 +51,7 @@ public class Player {
         this.position = new Vector2(x, y);
         this.velocity = new Vector2(0f, 0f);
         this.lastDirection = new Vector2(0f,0f);
+        this.knockback = new Vector2(0f,0f);
     }
 
     public void draw(SpriteBatch spriteBatch){
@@ -82,16 +93,17 @@ public class Player {
             return;
         }
 
-        // Execute code if moving
+        // Execute code if trying to move
         normalize(velocity);
         updatePlayerFromVelocity(velocity);
 
+        if (collisionManager.isCollide(this.collisionRectangle)){
+            float knockbackStrength = 2f;
+            knockback.set(lastDirection).scl(-knockbackStrength);
+        }
+
         // Move the player
-        this.position.x += velocity.x * speed * delta;
-        this.position.y += velocity.y * speed * delta;
-
-
-
+        move(velocity, speed, delta);
     }
 
     public void normalize(Vector2 vector2){
@@ -119,6 +131,36 @@ public class Player {
     public void changeSpeed(float speed){
         this.speed = speed;
     }
+
+    public void move(Vector2 direction, float speed, float delta) {
+        float maxMoveSpeed = 1.3f;
+
+        float moveX = direction.x * speed * delta + knockback.x;
+        if (moveX > 0) {
+            moveX = min(moveX, maxMoveSpeed);
+        }
+        else if (moveX < 0) {
+            moveX = max(moveX, -maxMoveSpeed);
+        }
+
+        float moveY = direction.y * speed * delta + knockback.y;
+        if (moveY > 0) {
+            moveY = min(moveY, maxMoveSpeed);
+        }
+        else if (moveY < 0) {
+            moveY = max(moveY, -maxMoveSpeed);
+        }
+
+        this.position.x += moveX;
+        this.position.y += moveY;
+        this.collisionRectangle.setPosition(this.position.x, this.position.y);
+
+        // Lerp stands for Linear Interpolation, another linear algebra concept!
+        // This will smooth out the knockback to prevent teleporting.
+        // Isn't linear algebra great?!
+        knockback.lerp(Vector2.Zero, 10f * delta);
+    }
+
 
     private void updatePlayerToIdle(){
         if (this.currentState != CharacterState.IDLE) {
