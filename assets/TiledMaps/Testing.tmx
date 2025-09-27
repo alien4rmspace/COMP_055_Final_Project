@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="27" height="20" tilewidth="48" tileheight="48" infinite="0" nextlayerid="3" nextobjectid="1">
- <tileset firstgid="1" source="Modern_Exteriors_Complete_Tileset_48x48.tsx"/>
+ <tileset firstgid="1" name="Modern_Exteriors_Complete_Tileset_48x48" tilewidth="48" tileheight="48" tilecount="79728" columns="176">
+  <image source="Modern_Exteriors_Complete_Tileset_48x48.png" trans="ff00ff" width="8448" height="21744"/>
+ </tileset>
  <layer id="1" name="Terrain" width="27" height="20">
   <data encoding="csv">
 184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,184,
