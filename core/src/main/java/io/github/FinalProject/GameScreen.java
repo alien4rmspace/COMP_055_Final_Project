@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -12,28 +13,39 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen implements Screen{
-	private Viewport viewport;
-	private SpriteBatch spriteBatch;
-	private Sprite ak47;
+	private final Viewport viewport;
+	private final SpriteBatch spriteBatch;
+    private final TiledMap tiledMap;
+    private final OrthogonalTiledMapRenderer renderer;
+    private final Player player;
+    private final OrthographicCamera camera;
+    private Sprite ak47;
     private TextureManager textureManager;
     private float stateTime = 0f;
-    private Player player;
 
-	public GameScreen() {
+    public GameScreen() {
         new TextureManager();
         new AnimationManager();
-		viewport = new FitViewport(1024, 768);
 
-		spriteBatch = new SpriteBatch();
+        tiledMap = new TmxMapLoader().load("TiledMaps/Testing.tmx");
+        renderer = new OrthogonalTiledMapRenderer(tiledMap);
 
+        spriteBatch = new SpriteBatch();
         player = new Player(50, 50);
 
-	}
+        camera = new OrthographicCamera();
+        viewport = new FitViewport(1296, 980, camera);
+        camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
+        camera.update();
+    }
 
 	@Override
 	public void show() {
@@ -41,10 +53,27 @@ public class GameScreen implements Screen{
 	}
 
 	// The render function is basically your while loop.
-	public void render(float delta) {
-        this.update(delta);
-        this.draw();
-	}
+    @Override
+    public void render(float delta) {
+        update(delta);
+
+        // Clear screen first
+        ScreenUtils.clear(Color.BLACK);
+
+        // Update camera
+        camera.update();
+
+        // Render tilemap
+        renderer.setView(camera);
+        renderer.render();
+
+        // Render your game objects
+        spriteBatch.setProjectionMatrix(camera.combined);
+        spriteBatch.begin();
+        draw();
+        spriteBatch.end();
+    }
+
 	public void resize(int width, int height) {
         viewport.update(width, height, true);
 	}
@@ -64,11 +93,7 @@ public class GameScreen implements Screen{
         player.update(delta);
     }
 	public void draw() {
-        ScreenUtils.clear(Color.BLACK);
-
-        spriteBatch.begin();
         player.draw(spriteBatch);
-        spriteBatch.end();
 	}
 	@Override
 	public void dispose() {

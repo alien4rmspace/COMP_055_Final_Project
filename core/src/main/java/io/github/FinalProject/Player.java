@@ -17,11 +17,11 @@ public class Player {
     private final Animation<TextureRegion> walkAnimationUp;
     private final Animation<TextureRegion> walkAnimationDown;
 
-    private CharacterState currentState = CharacterState.IDLE;
+    private CharacterState currentState;
 
     private final Vector2 position;
     private final Vector2 velocity;
-    private Vector2 lastDirection;
+    private final Vector2 lastDirection;
 
     private float speed = 200f;
     private float stateTime = 0;
@@ -84,7 +84,7 @@ public class Player {
 
         // Execute code if moving
         normalize(velocity);
-        updateStateFromVelocity(velocity);
+        updatePlayerFromVelocity(velocity);
 
         // Move the player
         this.position.x += velocity.x * speed * delta;
@@ -128,7 +128,7 @@ public class Player {
             updateIdleFromVelocity(lastDirection);
         }
     }
-    private void updateStateFromVelocity(Vector2 velocity){
+    private void updatePlayerFromVelocity(Vector2 velocity){
         // Velocity check to change state and animation
         float velocityWalkingThreshhold = 0.1f;
 
