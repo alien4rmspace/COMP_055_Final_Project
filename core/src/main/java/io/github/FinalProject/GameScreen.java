@@ -36,6 +36,7 @@ public class GameScreen implements Screen{
         new AnimationManager();
 
         tiledMap = new TmxMapLoader().load("TiledMaps/Testing.tmx");
+        System.out.println("Map loaded: " + (tiledMap != null));
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         spriteBatch = new SpriteBatch();
@@ -44,6 +45,8 @@ public class GameScreen implements Screen{
         camera = new OrthographicCamera();
         viewport = new FitViewport(1296, 980, camera);
         camera.position.set(viewport.getWorldWidth() / 2f, viewport.getWorldHeight() / 2f, 0);
+        camera.position.set(0,0,0);
+        camera.zoom = 1f;
         camera.update();
     }
 
