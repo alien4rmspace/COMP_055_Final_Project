@@ -26,6 +26,7 @@ public class LootContainer implements Interactable{
 
     @Override
     public boolean canInteract(Player player) {
+        // Expand player rectangle to account for knockback knocking player out of reach.
         Rectangle expanded = new Rectangle(player.getBounds());
         expanded.setSize(expanded.width + 15, expanded.height + 15); // Grow by 15 px each way
         expanded.setCenter(player.getBounds().x + player.getBounds().width / 2,

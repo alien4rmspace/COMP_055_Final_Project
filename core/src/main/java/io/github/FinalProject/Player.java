@@ -98,7 +98,7 @@ public class Player {
         updatePlayerFromVelocity(velocity);
 
         if (collisionManager.isCollide(this.collisionRectangle)){
-            float knockbackStrength = 2f;
+            float knockbackStrength = 5f;
             knockback.set(lastDirection).scl(-knockbackStrength);
         }
 
@@ -133,33 +133,37 @@ public class Player {
     }
 
     public void move(Vector2 direction, float speed, float delta) {
-        float maxMoveSpeed = 1.3f;
+        float maxMoveSpeed = 200f; // units per second
 
-        float moveX = direction.x * speed * delta + knockback.x;
-        if (moveX > 0) {
-            moveX = min(moveX, maxMoveSpeed);
-        }
-        else if (moveX < 0) {
-            moveX = max(moveX, -maxMoveSpeed);
+        Vector2 movement = new Vector2(direction).scl(speed).add(knockback).scl(delta);
+
+        if (movement.len() > maxMoveSpeed * delta) {
+            movement.setLength(maxMoveSpeed * delta);
         }
 
-        float moveY = direction.y * speed * delta + knockback.y;
-        if (moveY > 0) {
-            moveY = min(moveY, maxMoveSpeed);
-        }
-        else if (moveY < 0) {
-            moveY = max(moveY, -maxMoveSpeed);
+        // Save old position
+        float oldX = position.x;
+        float oldY = position.y;
+
+        // Move
+        position.add(movement);
+        collisionRectangle.setPosition(position.x, position.y);
+
+        // Check collision
+        if (collisionManager.isCollide(collisionRectangle)) {
+            // revert position if collided
+            position.set(oldX, oldY);
+            collisionRectangle.setPosition(position.x, position.y);
+
+            // apply knockback
+            knockback.set(direction).scl(-50f); // tweak knockback strength
         }
 
-        this.position.x += moveX;
-        this.position.y += moveY;
-        this.collisionRectangle.setPosition(this.position.x, this.position.y);
-
-        // Lerp stands for Linear Interpolation, another linear algebra concept!
-        // This will smooth out the knockback to prevent teleporting.
-        // Isn't linear algebra great?!
+        // Decay knockback
         knockback.lerp(Vector2.Zero, 10f * delta);
     }
+
+
 
 
     private void updatePlayerToIdle(){
