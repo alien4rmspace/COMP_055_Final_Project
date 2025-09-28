@@ -1,26 +1,50 @@
 package io.github.FinalProject;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class LootContainer {
+public class LootContainer implements Interactable{
     private Rectangle rectangle;
-    private ContainerType containerType;
+    private ContainerType type;
     private String lootTable;
     private boolean locked;
+    private boolean opened;
 
-    public LootContainer(Rectangle bounds, ContainerType type, boolean isLock){
+    public LootContainer(Rectangle bounds, String containerType){
         this.rectangle = bounds;
-        this.containerType = type;
-        this.locked = isLock;
+        this.locked = false;
+        this.opened = false;
+
+        switch (containerType){
+            case "Chest":
+                this.type = ContainerType.CHEST;
+                break;
+                default: break;
+        }
     }
 
-    public Rectangle getRectangle(){
-        return this.rectangle;
+    @Override
+    public boolean canInteract(Player player) {
+        Rectangle expanded = new Rectangle(player.getBounds());
+        expanded.setSize(expanded.width + 15, expanded.height + 15); // Grow by 15 px each way
+        expanded.setCenter(player.getBounds().x + player.getBounds().width / 2,
+            player.getBounds().y + player.getBounds().height / 2);  // Account for rectangle growing not from the center.
+
+        return expanded.overlaps(this.rectangle) && !opened;
     }
-    public ContainerType getContainerType(){
-        return this.containerType;
+
+    @Override
+    public void interact(Player player){
+        if (!opened){
+            this.opened = true;
+            System.out.println("Chest opened! Dropping loot from: " + lootTable);
+        }
     }
-    public boolean isLocked(){
-        return this.locked;
+
+    public void draw(SpriteBatch batch, Texture texture) {
+        if (!opened) {
+            batch.draw(texture, rectangle.x, rectangle.y);
+        }
     }
 }

@@ -223,4 +223,8 @@ public class Player {
             this.animation = idleAnimationLeft;
         }
     }
+
+    public Rectangle getBounds() {
+        return collisionRectangle;
+    }
 }

@@ -7,24 +7,21 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-public class LootContainerManager {
-    private final Array<Rectangle> lootRectangles = new Array<Rectangle>();
+public class InteractableManager {
+    private final Array<Interactable> interactables = new Array<Interactable>();
 
-    public LootContainerManager(TiledMap tiledMap){
+    public InteractableManager(TiledMap tiledMap){
         MapLayer layer = tiledMap.getLayers().get("Interactables");
         for (MapObject object : layer.getObjects()){
             Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
             String type = object.getProperties().get("type", String.class);
-            System.out.println("Spawn loot: " + type + " at " + rectangle);
+            interactables.add(new LootContainer(rectangle, type));
         }
+
+        System.out.println("Successfully loaded containers in LootContainerManager");
     }
 
-    public boolean isCollide(Rectangle bounds){
-        for (Rectangle rectangle : lootRectangles){
-            if (bounds.overlaps(rectangle)){
-                return true;
-            }
-        }
-        return false;
+    public Array<Interactable> getInteractables(){
+        return interactables;
     }
 }

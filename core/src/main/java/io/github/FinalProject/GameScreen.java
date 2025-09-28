@@ -18,9 +18,10 @@ public class GameScreen implements Screen{
     private final TiledMap tiledMap;
     private final OrthogonalTiledMapRenderer renderer;
     private final Player player;
+    private final PlayerInteract playerInteract;
     private final OrthographicCamera camera;
     private final CollisionManager collisionManager;
-    private final LootContainerManager lootContainerManager;
+    private final InteractableManager interactableManager;
     private Sprite ak47;
     private TextureManager textureManager;
     private float stateTime = 0f;
@@ -29,11 +30,10 @@ public class GameScreen implements Screen{
         new TextureManager();
         new AnimationManager();
 
-
         tiledMap = new TmxMapLoader().load("TiledMaps/Testing.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
         collisionManager = new CollisionManager(tiledMap);
-        lootContainerManager = new LootContainerManager(tiledMap);
+        interactableManager = new InteractableManager(tiledMap);
 
         // Set Camera up for 2d tile map.
         camera = new OrthographicCamera();
@@ -45,6 +45,7 @@ public class GameScreen implements Screen{
 
         spriteBatch = new SpriteBatch();
         player = new Player(50, 50, collisionManager);
+        playerInteract = new PlayerInteract(interactableManager.getInteractables());
     }
 
 	@Override
@@ -91,6 +92,7 @@ public class GameScreen implements Screen{
         // Required to make animations in sync between different computer systems due to hardware speed inconsistency.
         stateTime += delta;
         player.update(delta);
+        playerInteract.update(player);
     }
 	public void draw() {
         player.draw(spriteBatch);
@@ -99,4 +101,8 @@ public class GameScreen implements Screen{
 	public void dispose() {
 	    spriteBatch.dispose();
 	}
+
+    public void interact(Player player) {
+
+    }
 }

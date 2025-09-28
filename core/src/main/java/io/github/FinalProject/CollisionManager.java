@@ -20,6 +20,8 @@ public class CollisionManager {
         for (MapObject object : layer.getObjects()){
             collisionRectangles.add(((RectangleMapObject) object).getRectangle());
         }
+
+        System.out.println("Successfully loaded collisions in CollisionManager");
     }
 
     public boolean isCollide(Rectangle bounds){
