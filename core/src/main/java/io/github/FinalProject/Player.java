@@ -97,11 +97,6 @@ public class Player {
         normalize(velocity);
         updatePlayerFromVelocity(velocity);
 
-        if (collisionManager.isCollide(this.collisionRectangle)){
-            float knockbackStrength = 5f;
-            knockback.set(lastDirection).scl(-knockbackStrength);
-        }
-
         // Move the player
         move(velocity, speed, delta);
     }
@@ -135,7 +130,7 @@ public class Player {
     public void move(Vector2 direction, float speed, float delta) {
         float maxMoveSpeed = 200f; // units per second
 
-        Vector2 movement = new Vector2(direction).scl(speed).add(knockback).scl(delta);
+        Vector2 movement = new Vector2(direction).scl(speed).scl(delta);
 
         if (movement.len() > maxMoveSpeed * delta) {
             movement.setLength(maxMoveSpeed * delta);
@@ -154,13 +149,7 @@ public class Player {
             // revert position if collided
             position.set(oldX, oldY);
             collisionRectangle.setPosition(position.x, position.y);
-
-            // apply knockback
-            knockback.set(direction).scl(-50f); // tweak knockback strength
         }
-
-        // Decay knockback
-        knockback.lerp(Vector2.Zero, 10f * delta);
     }
 
 
