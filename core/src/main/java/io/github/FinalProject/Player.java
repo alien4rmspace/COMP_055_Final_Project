@@ -88,6 +88,7 @@ public class Player {
         // Return if not moving
         if (velocity.x == 0 && velocity.y == 0) {
             if (this.currentState != CharacterState.IDLE){
+                // Player's velocity is 0, but current state is not IDLE
                 updatePlayerToIdle();
             }
             return;
@@ -151,8 +152,6 @@ public class Player {
             collisionRectangle.setPosition(position.x, position.y);
         }
     }
-
-
 
 
     private void updatePlayerToIdle(){
