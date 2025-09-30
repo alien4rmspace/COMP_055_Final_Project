@@ -4,17 +4,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class LootContainer implements Interactable{
-    private Rectangle rectangle;
-    private LootTable lootTable;
-    private ContainerType containerType;
-    private boolean locked;
-    private boolean opened;
+public class SpawnedLoot implements Interactable{
+    Rectangle rectangle;
+    LootTable lootTable;
+    ContainerType containerType;
+    Texture texture;
+    boolean taken;
 
-    public LootContainer(Rectangle bounds, String containerType){
+    public SpawnedLoot(Rectangle bounds, String containerType){
         this.rectangle = bounds;
-        this.locked = false;
-        this.opened = false;
+        this.taken = false;
+
+        this.texture = TextureManager.get("pizza");
 
         switch (containerType){
             case "common":
@@ -43,33 +44,28 @@ public class LootContainer implements Interactable{
         expanded.setCenter(player.getBounds().x + player.getBounds().width / 2,
             player.getBounds().y + player.getBounds().height / 2);  // Account for rectangle growing not from the center.
 
-        return expanded.overlaps(this.rectangle) && !opened;
+        return expanded.overlaps(this.rectangle) && !taken;
     }
 
     @Override
     public void interact(Player player){
-        if (!opened){
-            this.opened = true;
+        if (!taken){
+            this.taken = true;
             Item item = lootTable.rollItem();
+
             System.out.println("Chest opened! Dropping loot from: " + item.getName());
         }
     }
 
     @Override
-    public void draw(SpriteBatch batch) {
-        if (!opened){
-
+    public void draw(SpriteBatch spritebatch){
+        if (!this.taken){
+            spritebatch.draw(this.texture, this.rectangle.x, this.rectangle.y);
         }
     }
 
     @Override
     public Rectangle getRectangle() {
         return rectangle;
-    }
-
-    public void draw(SpriteBatch batch, Texture texture) {
-        if (!opened) {
-            batch.draw(texture, rectangle.x, rectangle.y);
-        }
     }
 }

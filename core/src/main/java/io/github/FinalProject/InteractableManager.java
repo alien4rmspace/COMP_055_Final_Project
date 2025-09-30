@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class InteractableManager {
     private final Array<Interactable> interactables = new Array<Interactable>();
+    private CollisionManager collisionManager;
 
     public InteractableManager(TiledMap tiledMap){
         MapLayer layer = tiledMap.getLayers().get("Interactables");
@@ -25,12 +26,22 @@ public class InteractableManager {
             if ("loot_spawn".equals(object.getProperties().get("type",String.class))) {
                 float chanceToSpawn = 0.2f;
                 if (MathUtils.random(0f, 1f) < chanceToSpawn){
+                    Rectangle rectangle = ((RectangleMapObject) object).getRectangle();
+                    interactables.add(new SpawnedLoot(rectangle, "common"));
                     System.out.println("Spawning loot_spawn");
                 }
             }
         }
 
         System.out.println("Successfully loaded containers in LootContainerManager");
+    }
+
+    public void setCollisionManager(CollisionManager collisionManager){
+        this.collisionManager = collisionManager;
+    }
+
+    public void removeInteractable(Interactable interactable){
+        interactables.removeValue(interactable, true);
     }
 
     public Array<Interactable> getInteractables(){

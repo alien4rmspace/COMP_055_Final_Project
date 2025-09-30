@@ -1,6 +1,5 @@
 package io.github.FinalProject;
 
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -16,15 +15,26 @@ public class CollisionManager {
         for (MapObject object : layer.getObjects()){
             collisionRectangles.add(((RectangleMapObject) object).getRectangle());
         }
-        layer = tiledMap.getLayers().get("Interactables");
-        for (MapObject object : layer.getObjects()){
+
+        // Add interactables bounds here
+        MapLayer interactableLayer = tiledMap.getLayers().get("Interactables");
+        for (MapObject object : interactableLayer.getObjects()){
             if ("loot_spawn".equals(object.getProperties().get("type", String.class))){
-                continue;  // Get use to seeing continue. Highly utilized in game development.
+                // Ignore all loot_spawn interactable objects. No collision, just interactable.
+                continue;
             }
             collisionRectangles.add(((RectangleMapObject) object).getRectangle());
         }
 
         System.out.println("Successfully loaded collisions in CollisionManager");
+    }
+
+    public void addCollisionRectangle(Rectangle rectangle){
+        collisionRectangles.add(rectangle);
+    }
+
+    public void removeCollisionRectangle(Rectangle rectangle){
+        collisionRectangles.removeValue(rectangle, true);
     }
 
     public boolean isCollide(Rectangle bounds){

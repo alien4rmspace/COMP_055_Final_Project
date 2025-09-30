@@ -1,6 +1,7 @@
 .gitkeep
-AK47.png
 Characters/Premade_Character_48x48_03.png
+Textures/Pizza.png
 TiledMaps/11_Camping_48x48.png
 TiledMaps/1_Terrains_and_Fences_48x48.png
 TiledMaps/rural.tmx
+particle_effects.png

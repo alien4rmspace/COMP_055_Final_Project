@@ -32,8 +32,9 @@ public class GameScreen implements Screen{
         spriteBatch = new SpriteBatch();
         tiledMap = new TmxMapLoader().load("TiledMaps/rural.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
-        collisionManager = new CollisionManager(tiledMap);
         interactableManager = new InteractableManager(tiledMap);
+        collisionManager = new CollisionManager(tiledMap);
+        interactableManager.setCollisionManager(collisionManager);
         playerInteract = new PlayerInteract(interactableManager.getInteractables());
 
         // Set Camera up for 2d tile map.
@@ -94,6 +95,9 @@ public class GameScreen implements Screen{
         playerInteract.update(player);
     }
 	public void draw() {
+        for (Interactable interactable : interactableManager.getInteractables()) {
+            interactable.draw(spriteBatch);
+        }
         player.draw(spriteBatch);
 	}
 	@Override
