@@ -4,7 +4,7 @@ import java.util.*;
 
 public class LootTable {
     private final List<LootItem> lootItems = new ArrayList<>();
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     public void addItem(LootItem item) {
         lootItems.add(item);
