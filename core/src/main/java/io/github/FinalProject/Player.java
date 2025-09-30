@@ -130,7 +130,6 @@ public class Player {
     public void move(Vector2 direction, float speed, float delta) {
         float maxMoveSpeed = 200f; // units per second
 
-        // Basically new Vector2(x * speed * delta, y * speed * delta)
         Vector2 movement = new Vector2(direction).scl(speed).scl(delta);
 
         if (movement.len() > maxMoveSpeed * delta) {
@@ -141,15 +140,20 @@ public class Player {
         float oldX = position.x;
         float oldY = position.y;
 
+        // Move
         position.add(movement);
         collisionRectangle.setPosition(position.x, position.y);
 
+        // Check collision
         if (collisionManager.isCollide(collisionRectangle)) {
             // revert position if collided
             position.set(oldX, oldY);
             collisionRectangle.setPosition(position.x, position.y);
         }
     }
+
+
+
 
     private void updatePlayerToIdle(){
         if (this.currentState != CharacterState.IDLE) {
