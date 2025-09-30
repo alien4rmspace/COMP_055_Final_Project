@@ -21,19 +21,18 @@ public class LootTable {
                 count += lootItem.dropWeight;
                 if (count >= roll) {
 
-                    int amount = lootItem.minAmount + rand.nextInt(lootItem.maxAmount - lootItem.minAmount);  // Something like coins for an example.
+                    int amount = lootItem.minAmount + rand.nextInt(lootItem.minAmount + lootItem.maxAmount - lootItem.minAmount);  // Something like coins for an example.
 
                     // Calculate weight of the item.
-                    float weight = lootItem.minItemWeight + rand.nextFloat(lootItem.maxItemWeight - lootItem.minItemWeight);
+                    float weight = lootItem.minItemWeight + rand.nextFloat(lootItem.minItemWeight + lootItem.maxItemWeight - lootItem.minItemWeight);
 
                     //Calculate price of the item.
                     float price = 0;
                     if (lootItem.materialType != null){
                         price = lootItem.materialType.costPerGram * weight;
                     } else{
-                        price = lootItem.minPrice + rand.nextFloat(lootItem.maxPrice - lootItem.minPrice);
+                        price = lootItem.minPrice + rand.nextFloat(lootItem.minPrice + lootItem.maxPrice - lootItem.minPrice);
                     }
-
 
                     return new Item(lootItem.name, price, weight, amount);
                 }

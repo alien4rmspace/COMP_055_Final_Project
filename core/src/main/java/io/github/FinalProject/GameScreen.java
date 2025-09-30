@@ -34,8 +34,9 @@ public class GameScreen implements Screen{
         tiledMap = new TmxMapLoader().load("TiledMaps/Testing.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
         collisionManager = new CollisionManager(tiledMap);
-        interactableManager = new InteractableManager(tiledMap);
         lootTable = new LootTable();
+        LootTableManager.init();
+        interactableManager = new InteractableManager(tiledMap);
 
         // Set Camera up for 2d tile map.
         camera = new OrthographicCamera();
@@ -48,17 +49,6 @@ public class GameScreen implements Screen{
         spriteBatch = new SpriteBatch();
         player = new Player(50, 50, collisionManager);
         playerInteract = new PlayerInteract(interactableManager.getInteractables());
-
-        lootTable.addItem(new LootItem(
-            "Silver Necklace",
-            MaterialType.SILVER,
-            20,
-            0.1f,
-            2,
-            1,
-            1,
-            0,
-            0));
     }
 
 	@Override

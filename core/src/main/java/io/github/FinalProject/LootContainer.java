@@ -6,8 +6,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class LootContainer implements Interactable{
     private Rectangle rectangle;
-    private ContainerType type;
-    private String lootTable;
+    private LootTable lootTable;
+    private ContainerType containerType;
     private boolean locked;
     private boolean opened;
 
@@ -17,10 +17,21 @@ public class LootContainer implements Interactable{
         this.opened = false;
 
         switch (containerType){
-            case "Chest":
-                this.type = ContainerType.CHEST;
+            case "common":
+                this.containerType = ContainerType.COMMON;
+                this.lootTable = LootTableManager.get("commonLootTable");
                 break;
-                default: break;
+
+            case "rare":
+                this.containerType = ContainerType.RARE;
+                break;
+
+            case "legendary":
+                this.containerType = ContainerType.LEGENDARY;
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -39,7 +50,8 @@ public class LootContainer implements Interactable{
     public void interact(Player player){
         if (!opened){
             this.opened = true;
-            System.out.println("Chest opened! Dropping loot from: " + lootTable);
+            Item item = lootTable.rollItem();
+            System.out.println("Chest opened! Dropping loot from: " + item.getName());
         }
     }
 
