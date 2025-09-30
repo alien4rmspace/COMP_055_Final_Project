@@ -22,6 +22,7 @@ public class GameScreen implements Screen{
     private final OrthographicCamera camera;
     private final CollisionManager collisionManager;
     private final InteractableManager interactableManager;
+    private final LootTable lootTable;
     private Sprite ak47;
     private TextureManager textureManager;
     private float stateTime = 0f;
@@ -34,6 +35,7 @@ public class GameScreen implements Screen{
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
         collisionManager = new CollisionManager(tiledMap);
         interactableManager = new InteractableManager(tiledMap);
+        lootTable = new LootTable();
 
         // Set Camera up for 2d tile map.
         camera = new OrthographicCamera();
@@ -46,6 +48,17 @@ public class GameScreen implements Screen{
         spriteBatch = new SpriteBatch();
         player = new Player(50, 50, collisionManager);
         playerInteract = new PlayerInteract(interactableManager.getInteractables());
+
+        lootTable.addItem(new LootItem(
+            "Silver Necklace",
+            MaterialType.SILVER,
+            20,
+            0.1f,
+            2,
+            1,
+            1,
+            0,
+            0));
     }
 
 	@Override
