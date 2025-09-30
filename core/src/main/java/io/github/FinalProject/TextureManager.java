@@ -11,7 +11,7 @@ public class TextureManager {
     // You can think of it as a global Class.
 	private static final HashMap<String, Texture> textureMap = new HashMap<>();
 
-    public TextureManager(){
+    public static void init(){
         load("character3", "Characters/Premade_Character_48x48_03.png");
 
         System.out.println("Successfully loaded textures in TextureManager");

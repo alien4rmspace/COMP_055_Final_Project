@@ -26,6 +26,16 @@ public class LootTableManager {
             1, 1,
             0, 0));
         tables.put("commonLootTable", commonLootTable);
+
+        LootTable rareLootTable = new LootTable();
+        // TODO: ADD ITEMS HERE
+        tables.put("rareLootTable", commonLootTable);
+
+        LootTable legendaryLootTable = new LootTable();
+        // TODO: ADD ITEMS HERE
+        tables.put("legendaryLootTable", commonLootTable);
+
+
         System.out.println("Successfully loaded loot tables in LootTableManager!");
     }
 

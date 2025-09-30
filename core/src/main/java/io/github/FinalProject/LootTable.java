@@ -3,7 +3,7 @@ package io.github.FinalProject;
 import java.util.*;
 
 public class LootTable {
-    private List<LootItem> lootItems = new ArrayList<>();
+    private final List<LootItem> lootItems = new ArrayList<>();
     private Random rand = new Random();
 
     public void addItem(LootItem item) {

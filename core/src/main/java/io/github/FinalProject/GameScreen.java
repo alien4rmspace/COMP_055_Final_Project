@@ -22,21 +22,19 @@ public class GameScreen implements Screen{
     private final OrthographicCamera camera;
     private final CollisionManager collisionManager;
     private final InteractableManager interactableManager;
-    private final LootTable lootTable;
-    private Sprite ak47;
-    private TextureManager textureManager;
     private float stateTime = 0f;
 
     public GameScreen() {
-        new TextureManager();
-        new AnimationManager();
+        TextureManager.init();
+        AnimationManager.init();
+        LootTableManager.init();
 
+        spriteBatch = new SpriteBatch();
         tiledMap = new TmxMapLoader().load("TiledMaps/Testing.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
         collisionManager = new CollisionManager(tiledMap);
-        lootTable = new LootTable();
-        LootTableManager.init();
         interactableManager = new InteractableManager(tiledMap);
+        playerInteract = new PlayerInteract(interactableManager.getInteractables());
 
         // Set Camera up for 2d tile map.
         camera = new OrthographicCamera();
@@ -46,9 +44,7 @@ public class GameScreen implements Screen{
         camera.zoom = 1f;
         camera.update();
 
-        spriteBatch = new SpriteBatch();
         player = new Player(50, 50, collisionManager);
-        playerInteract = new PlayerInteract(interactableManager.getInteractables());
     }
 
 	@Override
@@ -104,8 +100,4 @@ public class GameScreen implements Screen{
 	public void dispose() {
 	    spriteBatch.dispose();
 	}
-
-    public void interact(Player player) {
-
-    }
 }

@@ -1,15 +1,16 @@
 package io.github.FinalProject;
 
 public class Item {
-    private String name;
-    private float itemPrice;
-    private float itemWeight;
-    private int amount;
+    private final String name;
+    private final float itemPrice;
+    private final float itemWeight;
+    private final int amount;
 
     public Item(String name, float itemPrice, float itemWeight, int amount) {
         this.name = name;
         this.itemPrice = itemPrice;
         this.itemWeight = itemWeight;
+        this.amount = amount;
     }
 
     public String getName() {
