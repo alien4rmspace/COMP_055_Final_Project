@@ -18,6 +18,9 @@ public class CollisionManager {
         }
         layer = tiledMap.getLayers().get("Interactables");
         for (MapObject object : layer.getObjects()){
+            if ("loot_spawn".equals(object.getProperties().get("type", String.class))){
+                continue;  // Get use to seeing continue. Highly utilized in game development.
+            }
             collisionRectangles.add(((RectangleMapObject) object).getRectangle());
         }
 
