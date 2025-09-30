@@ -3,4 +3,4 @@ AK47.png
 Characters/Premade_Character_48x48_03.png
 TiledMaps/11_Camping_48x48.png
 TiledMaps/1_Terrains_and_Fences_48x48.png
-TiledMaps/Testing.tmx
+TiledMaps/rural.tmx

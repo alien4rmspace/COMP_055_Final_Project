@@ -30,7 +30,7 @@ public class GameScreen implements Screen{
         LootTableManager.init();
 
         spriteBatch = new SpriteBatch();
-        tiledMap = new TmxMapLoader().load("TiledMaps/Testing.tmx");
+        tiledMap = new TmxMapLoader().load("TiledMaps/rural.tmx");
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
         collisionManager = new CollisionManager(tiledMap);
         interactableManager = new InteractableManager(tiledMap);
