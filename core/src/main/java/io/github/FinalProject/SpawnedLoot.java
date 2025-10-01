@@ -51,7 +51,6 @@ public class SpawnedLoot implements Interactable{
     public void interact(Player player){
         if (!taken){
             this.taken = true;
-            this.texture.dispose();
             Item item = lootTable.rollItem();
 
             System.out.println("Chest opened! Dropping loot from: " + item.getName());
