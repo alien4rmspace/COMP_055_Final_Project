@@ -51,6 +51,7 @@ public class SpawnedLoot implements Interactable{
     public void interact(Player player){
         if (!taken){
             this.taken = true;
+            this.texture.dispose();
             Item item = lootTable.rollItem();
 
             System.out.println("Chest opened! Dropping loot from: " + item.getName());
@@ -60,6 +61,7 @@ public class SpawnedLoot implements Interactable{
     @Override
     public void draw(SpriteBatch spritebatch){
         if (!this.taken){
+            // Spawned Loot has not been taken.
             spritebatch.draw(this.texture, this.rectangle.x, this.rectangle.y);
         }
     }
