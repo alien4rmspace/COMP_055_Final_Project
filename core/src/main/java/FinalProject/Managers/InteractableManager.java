@@ -1,4 +1,4 @@
-package FinalProject;
+package FinalProject.Managers;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;

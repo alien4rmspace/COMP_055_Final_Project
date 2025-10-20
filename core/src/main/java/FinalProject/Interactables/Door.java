@@ -2,7 +2,7 @@ package FinalProject.Interactables;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import FinalProject.Player;
+import FinalProject.Player.Player;
 
 public class Door implements Interactable {
     private Rectangle rectangle;

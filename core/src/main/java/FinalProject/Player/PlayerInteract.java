@@ -1,4 +1,4 @@
-package FinalProject;
+package FinalProject.Player;
 
 import com.badlogic.gdx.utils.Array;
 import FinalProject.Interactables.Interactable;

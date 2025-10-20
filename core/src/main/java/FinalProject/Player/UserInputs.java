@@ -1,9 +1,7 @@
-package FinalProject;
+package FinalProject.Player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
 
 public class UserInputs {
     public static boolean isUpPressed() {

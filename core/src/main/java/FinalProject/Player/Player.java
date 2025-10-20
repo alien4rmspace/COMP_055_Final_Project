@@ -1,5 +1,8 @@
-package FinalProject;
+package FinalProject.Player;
 
+import FinalProject.CharacterState;
+import FinalProject.Managers.AnimationManager;
+import FinalProject.Managers.CollisionManager;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

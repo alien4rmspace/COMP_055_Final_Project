@@ -1,5 +1,6 @@
 package FinalProject;
 
+import FinalProject.Player.Player;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import FinalProject.Interactables.Interactable;

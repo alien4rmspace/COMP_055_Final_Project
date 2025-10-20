@@ -1,5 +1,8 @@
-package FinalProject;
+package FinalProject.Screens;
 
+import FinalProject.Managers.*;
+import FinalProject.Player.Player;
+import FinalProject.Player.PlayerInteract;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;

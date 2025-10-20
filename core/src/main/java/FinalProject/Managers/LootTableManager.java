@@ -1,4 +1,8 @@
-package FinalProject;
+package FinalProject.Managers;
+
+import FinalProject.Loot.LootItem;
+import FinalProject.Loot.LootTable;
+import FinalProject.MaterialType;
 
 import java.util.HashMap;
 import java.util.Map;

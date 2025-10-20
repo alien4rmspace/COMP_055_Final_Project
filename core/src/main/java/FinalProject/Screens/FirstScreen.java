@@ -1,4 +1,4 @@
-package FinalProject;
+package FinalProject.Screens;
 
 import com.badlogic.gdx.Screen;
 

@@ -1,6 +1,10 @@
 package FinalProject.Interactables;
 
-import FinalProject.*;
+import FinalProject.Loot.Item;
+import FinalProject.Loot.LootTable;
+import FinalProject.Managers.LootTableManager;
+import FinalProject.Managers.TextureManager;
+import FinalProject.Player.Player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;

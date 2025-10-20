@@ -1,4 +1,4 @@
-package FinalProject;
+package FinalProject.Loot;
 
 public class Item {
     private final String name;

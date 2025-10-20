@@ -1,13 +1,12 @@
 package FinalProject.Interactables;
 
-import FinalProject.Item;
-import FinalProject.LootTable;
-import FinalProject.LootTableManager;
-import FinalProject.Player;
+import FinalProject.Loot.Item;
+import FinalProject.Loot.LootTable;
+import FinalProject.Managers.LootTableManager;
+import FinalProject.Player.Player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import FinalProject.*;
 
 public class LootContainer implements Interactable {
     private Rectangle rectangle;

@@ -1,9 +1,8 @@
-package FinalProject;
+package FinalProject.Managers;
 
 import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.Texture;
-import java.util.Map;
 
 public class TextureManager {
     // This is a unique class. Only one of this class will exist at all times and
