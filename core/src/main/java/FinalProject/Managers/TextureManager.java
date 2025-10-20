@@ -12,6 +12,7 @@ public class TextureManager {
 
     public static void init(){
         load("character3", "Characters/Premade_Character_48x48_03.png");
+        load("Amanda", "Characters/Amanda.png");
         load("pizza", "Textures/Pizza.png");
 
         System.out.println("Successfully loaded textures in TextureManager");

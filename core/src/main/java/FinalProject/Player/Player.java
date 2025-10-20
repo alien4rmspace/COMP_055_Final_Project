@@ -38,14 +38,15 @@ public class Player {
         this.collisionManager = collisionManager;
         this.collisionRectangle = new Rectangle(x, y, 38, 42); // Soz for the magic numbers.
 
-        this.idleAnimationUp = AnimationManager.get("player.standing.up");
-        this.idleAnimationRight = AnimationManager.get("player.standing.right");
-        this.idleAnimationLeft = AnimationManager.get("player.standing.left");
-        this.idleAnimationDown = AnimationManager.get("player.standing.down");
-        this.walkAnimationRight = AnimationManager.get("player.walking.right");
-        this.walkAnimationLeft = AnimationManager.get("player.walking.left");
-        this.walkAnimationUp = AnimationManager.get("player.walking.up");
-        this.walkAnimationDown = AnimationManager.get("player.walking.down");
+        String characterModel = "Amanda";
+        this.idleAnimationUp = AnimationManager.get(characterModel + ".standing.up");
+        this.idleAnimationRight = AnimationManager.get(characterModel + ".standing.right");
+        this.idleAnimationLeft = AnimationManager.get(characterModel + ".standing.left");
+        this.idleAnimationDown = AnimationManager.get(characterModel + ".standing.down");
+        this.walkAnimationRight = AnimationManager.get(characterModel + ".walking.right");
+        this.walkAnimationLeft = AnimationManager.get(characterModel + ".walking.left");
+        this.walkAnimationUp = AnimationManager.get(characterModel + ".walking.up");
+        this.walkAnimationDown = AnimationManager.get(characterModel + ".walking.down");
 
         this.animation = idleAnimationDown;
 
