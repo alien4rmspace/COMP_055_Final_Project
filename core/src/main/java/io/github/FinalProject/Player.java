@@ -169,27 +169,22 @@ public class Player {
 
     private void updateIdleAnimation(){
         // Velocity check to change state and animation
-        float velocityWalkingThreshhold = 0.1f;
 
-        if(this.lastDirection.y >= velocityWalkingThreshhold){
+        if(this.lastDirection.y > 0){
             // Idle Up
-            this.currentState = CharacterState.IDLE;
             this.animation = idleAnimationUp;
         }
-        if(this.lastDirection.y <= velocityWalkingThreshhold){
+        if(this.lastDirection.y < 0){
             // Idle Down
-            this.currentState = CharacterState.IDLE;
             this.animation = idleAnimationDown;
         }
 
-        if (this.lastDirection.x >= velocityWalkingThreshhold){
+        if (this.lastDirection.x > 0){
             // Idle right
-            this.currentState = CharacterState.IDLE;
             this.animation = idleAnimationRight;
         }
-        if (this.lastDirection.x <= -velocityWalkingThreshhold){
+        if (this.lastDirection.x < 0){
             // Idle left
-            this.currentState = CharacterState.IDLE;
             this.animation = idleAnimationLeft;
         }
     }
