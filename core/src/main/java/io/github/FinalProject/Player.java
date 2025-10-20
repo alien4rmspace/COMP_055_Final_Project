@@ -146,9 +146,6 @@ public class Player {
 
     // Velocity check to change state and animation
     private void updateMovementAnimation(){
-        if (currentState == CharacterState.IDLE){
-
-        }
         if(this.velocity.y > 0){
             // Moving Up
             this.animation = walkAnimationUp;
