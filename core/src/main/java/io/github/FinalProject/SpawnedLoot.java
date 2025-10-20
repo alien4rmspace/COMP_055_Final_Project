@@ -60,6 +60,7 @@ public class SpawnedLoot implements Interactable{
     @Override
     public void draw(SpriteBatch spritebatch){
         if (!this.taken){
+            // Spawned Loot has not been taken.
             spritebatch.draw(this.texture, this.rectangle.x, this.rectangle.y);
         }
     }

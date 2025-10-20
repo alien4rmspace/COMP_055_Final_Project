@@ -34,7 +34,6 @@ public class GameScreen implements Screen{
         renderer = new OrthogonalTiledMapRenderer(tiledMap);
         interactableManager = new InteractableManager(tiledMap);
         collisionManager = new CollisionManager(tiledMap);
-        interactableManager.setCollisionManager(collisionManager);
         playerInteract = new PlayerInteract(interactableManager.getInteractables());
 
         // Set Camera up for 2d tile map.
