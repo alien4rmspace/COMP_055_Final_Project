@@ -1,6 +1,5 @@
 package io.github.FinalProject;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -27,7 +26,6 @@ public class Player {
     private final Vector2 position;
     private final Vector2 velocity;
     private final Vector2 lastDirection;
-    private final Vector2 knockback;
 
     private CharacterState currentState;
     private float speed = 200f;
@@ -51,7 +49,6 @@ public class Player {
         this.position = new Vector2(x, y);
         this.velocity = new Vector2(0f, 0f);
         this.lastDirection = new Vector2(0f,0f);
-        this.knockback = new Vector2(0f,0f);
     }
 
     public void draw(SpriteBatch spriteBatch){
@@ -65,39 +62,34 @@ public class Player {
         this.velocity.y = 0;
 
         if(UserInputs.isUpPressed()){
-            this.velocity.y = 1;
-            this.lastDirection.x = velocity.x;
-            this.lastDirection.y = velocity.y;
+            this.velocity.y += 1;
         }
         if(UserInputs.isDownPressed()){
-            this.velocity.y = -1;
-            this.lastDirection.x = velocity.x;
-            this.lastDirection.y = velocity.y;
+            this.velocity.y += -1;
         }
         if(UserInputs.isLeftPressed()){
-            this.velocity.x = -1;
-            this.lastDirection.x = velocity.x;
-            this.lastDirection.y = velocity.y;
+            this.velocity.x += -1;
         }
         if(UserInputs.isRightPressed()){
-            this.velocity.x = 1;
-            this.lastDirection.x = velocity.x;
-            this.lastDirection.y = velocity.y;
+            this.velocity.x += 1;
         }
 
-        // Return if not moving
-        if (velocity.x == 0 && velocity.y == 0) {
+        // Return if player not moving
+        if (velocity.isZero()){
             if (this.currentState != CharacterState.IDLE){
-                updatePlayerToIdle();
+                this.currentState = CharacterState.IDLE;
+                updateIdleAnimation();
             }
             return;
         }
 
         // Execute code if trying to move
-        normalize(velocity);
-        updatePlayerFromVelocity(velocity);
+        this.currentState = CharacterState.WALKING;
+        this.lastDirection.set(this.velocity.x, this.velocity.y);   //Lets our animation know which way player is facing.
+        updateMovementAnimation(); //Updates which animations to play based on player's velocity.
 
         // Move the player
+        normalize(velocity);
         move(velocity, speed, delta);
     }
 
@@ -152,45 +144,30 @@ public class Player {
         }
     }
 
+    // Velocity check to change state and animation
+    private void updateMovementAnimation(){
+        if (currentState == CharacterState.IDLE){
 
-
-
-    private void updatePlayerToIdle(){
-        if (this.currentState != CharacterState.IDLE) {
-            this.currentState = CharacterState.IDLE;
-
-            normalize(velocity);
-            updateIdleFromVelocity(lastDirection);
         }
-    }
-    private void updatePlayerFromVelocity(Vector2 velocity){
-        // Velocity check to change state and animation
-        float velocityWalkingThreshhold = 0.1f;
-
-        if(this.velocity.y >= velocityWalkingThreshhold){
+        if(this.velocity.y > 0){
             // Moving Up
-            this.currentState = CharacterState.WALKING;
             this.animation = walkAnimationUp;
         }
-        if(this.velocity.y <= velocityWalkingThreshhold){
+        else if(this.velocity.y < 0){
             // Moving Down
-            this.currentState = CharacterState.WALKING;
             this.animation = walkAnimationDown;
         }
-
-        if (this.velocity.x >= velocityWalkingThreshhold){
+        if (this.velocity.x > 0){
             // Moving right
-            this.currentState = CharacterState.WALKING;
             this.animation = walkAnimationRight;
         }
-        if (this.velocity.x <= -velocityWalkingThreshhold){
+        else if (this.velocity.x < -0){
             // Moving left
-            this.currentState = CharacterState.WALKING;
             this.animation = walkAnimationLeft;
         }
     }
 
-    private void updateIdleFromVelocity(Vector2 velocity){
+    private void updateIdleAnimation(){
         // Velocity check to change state and animation
         float velocityWalkingThreshhold = 0.1f;
 
