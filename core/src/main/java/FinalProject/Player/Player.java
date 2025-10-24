@@ -158,6 +158,7 @@ public class Player {
             // Moving Down
             this.animation = walkAnimationDown;
         }
+
         if (this.velocity.x > 0){
             // Moving right
             this.animation = walkAnimationRight;
@@ -175,7 +176,7 @@ public class Player {
             // Idle Up
             this.animation = idleAnimationUp;
         }
-        if(this.lastDirection.y < 0){
+        else if(this.lastDirection.y < 0){
             // Idle Down
             this.animation = idleAnimationDown;
         }
@@ -184,7 +185,7 @@ public class Player {
             // Idle right
             this.animation = idleAnimationRight;
         }
-        if (this.lastDirection.x < 0){
+        else if (this.lastDirection.x < 0){
             // Idle left
             this.animation = idleAnimationLeft;
         }

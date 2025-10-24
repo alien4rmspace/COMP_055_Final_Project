@@ -14,42 +14,42 @@ public class AnimationManager {
         TextureRegion[] animationFrames;
         // Parse our sprite sheet in a 48 x 96 section starting at row 2, there are 6 animation frames in that row.
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 0 , 6);
-        load("player.walking.right", new Animation<>(0.1f, animationFrames));
+        animations.put("player.walking.right", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 7, 12);
-        load("player.walking.up", new Animation<>(0.1f, animationFrames));
+        animations.put("player.walking.up", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 13 , 18);
-        load("player.walking.left", new Animation<>(0.1f, animationFrames));
+        animations.put("player.walking.left", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 19 , 24);
-        load("player.walking.down", new Animation<>(0.1f, animationFrames));
+        animations.put("player.walking.down", new Animation<>(0.1f, animationFrames));
 
         // Idle Animation
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 0, 6);
-        load("player.standing.right", new Animation<>(0.1f, animationFrames));
+        animations.put("player.standing.right", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 7, 12);
-        load("player.standing.up", new Animation<>(0.1f, animationFrames));
+        animations.put("player.standing.up", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 13, 18);
-        load("player.standing.left", new Animation<>(0.1f, animationFrames));
+        animations.put("player.standing.left", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 1, 19, 24);
-        load("player.standing.down", new Animation<>(0.1f, animationFrames));
+        animations.put("player.standing.down", new Animation<>(0.1f, animationFrames));
 
         // Amanda's Animation
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 2, 0 , 6);
-        load("Amanda.walking.right", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.walking.right", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 2, 7, 12);
-        load("Amanda.walking.up", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.walking.up", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 2, 13 , 18);
-        load("Amanda.walking.left", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.walking.left", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 2, 19 , 24);
-        load("Amanda.walking.down", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.walking.down", new Animation<>(0.1f, animationFrames));
         // Idle Animation
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 1, 0, 6);
-        load("Amanda.standing.right", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.standing.right", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 1, 7, 12);
-        load("Amanda.standing.up", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.standing.up", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 1, 13, 18);
-        load("Amanda.standing.left", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.standing.left", new Animation<>(0.1f, animationFrames));
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 1, 19, 24);
-        load("Amanda.standing.down", new Animation<>(0.1f, animationFrames));
+        animations.put("Amanda.standing.down", new Animation<>(0.1f, animationFrames));
 
         System.out.println("Successfully loaded animations in AnimationManager");
     }
