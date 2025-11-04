@@ -11,14 +11,12 @@ public class PlayerInteract {
     }
 
     public void update(Player player){
-        if (UserInputs.isInteractPressed()){
             for (Interactable interactable : interactables){
                 if (interactable.canInteract(player)){
                     interactable.interact(player);
                     break;
                 }
             }
-        }
     }
 }
 

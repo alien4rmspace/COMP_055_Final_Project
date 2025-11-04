@@ -45,9 +45,10 @@ public class SpawnedLootContainer implements Interactable {
     public boolean canInteract(Player player) {
         // Expand player rectangle to account for knockback knocking player out of reach.
         Rectangle expanded = new Rectangle(player.getBounds());
-        expanded.setSize(expanded.width + 15, expanded.height + 15); // Grow by 15 px each way
+        int expandAmount = 15;
+        expanded.setSize(expanded.width + expandAmount, expanded.height + expandAmount); // Grow by 15 px each way
         expanded.setCenter(player.getBounds().x + player.getBounds().width / 2,
-            player.getBounds().y + player.getBounds().height / 2);  // Account for rectangle growing not from the center.
+                            player.getBounds().y + player.getBounds().height / 2);  // Account for rectangle growing not from the center.
 
         return expanded.overlaps(this.rectangle) && !taken;
     }

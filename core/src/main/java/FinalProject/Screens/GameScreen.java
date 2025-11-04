@@ -1,8 +1,13 @@
 package FinalProject.Screens;
 
+import FinalProject.LockPickInteraction;
 import FinalProject.Managers.*;
 import FinalProject.Player.Player;
 import FinalProject.Player.PlayerInteract;
+import FinalProject.Player.PlayerStatsIO;
+import com.badlogic.gdx.Game;
+import FinalProject.Player.UserInputs;
+import FinalProject.Player.InventoryUI;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import FinalProject.Interactables.Interactable;
 
 public class GameScreen implements Screen{
+    private final Game game;
 	private final Viewport viewport;
 	private final SpriteBatch spriteBatch;
     private final TiledMap tiledMap;
@@ -25,12 +31,11 @@ public class GameScreen implements Screen{
     private final OrthographicCamera camera;
     private final CollisionManager collisionManager;
     private final InteractableManager interactableManager;
+    private final InventoryUI inventoryUI;
     private float stateTime = 0f;
 
-    public GameScreen() {
-        TextureManager.init();
-        AnimationManager.init();
-        LootTableManager.init();
+    public GameScreen(Game game) {
+        this.game = game;
 
         spriteBatch = new SpriteBatch();
         tiledMap = new TmxMapLoader().load("TiledMaps/rural.tmx");
@@ -38,7 +43,6 @@ public class GameScreen implements Screen{
         interactableManager = new InteractableManager(tiledMap);
         collisionManager = new CollisionManager(tiledMap);
         playerInteract = new PlayerInteract(interactableManager.getInteractables());
-
         // Set Camera up for 2d tile map.
         camera = new OrthographicCamera();
         viewport = new FitViewport(1296, 980, camera);
@@ -48,10 +52,14 @@ public class GameScreen implements Screen{
         camera.update();
 
         player = new Player(50, 50, collisionManager);
+
+        inventoryUI = new InventoryUI(player.getInventory(), TextureManager.get("ui"));
     }
 
 	@Override
 	public void show() {
+        SoundManager.loop("adventure_soundtrack");
+
 	    System.out.println("GameScreen shown");
 	}
 
@@ -90,20 +98,34 @@ public class GameScreen implements Screen{
 
 	}
     public void update(float delta){
-        // delta is a built in function in libgdx which grabs the time in between each execution.
+        // delta is a built-in function in libgdx which grabs the time in between each execution.
         // Required to make animations in sync between different computer systems due to hardware speed inconsistency.
         stateTime += delta;
         player.update(delta);
-        playerInteract.update(player);
+
+        if (UserInputs.isInteractPressed()){
+            playerInteract.update(player);
+        }
+
+        if (UserInputs.isInventoryTogglePressed()) {
+            System.out.println("I key pressed");
+            inventoryUI.toggle();
+            System.out.println("Inventory visible: " + inventoryUI.isVisible());
+        }
+
+        if (LockPickInteraction.isActive()) {LockPickInteraction.update(delta);};
     }
 	public void draw() {
         for (Interactable interactable : interactableManager.getInteractables()) {
             interactable.draw(spriteBatch);
         }
         player.draw(spriteBatch);
+        LockPickInteraction.draw(spriteBatch);
 	}
 	@Override
 	public void dispose() {
 	    spriteBatch.dispose();
+        inventoryUI.dispose();
+        PlayerStatsIO.save(this.player.getStats());
 	}
 }

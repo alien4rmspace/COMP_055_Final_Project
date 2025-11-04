@@ -17,12 +17,12 @@ public class UserInputs {
         return Gdx.input.isKeyPressed(Input.Keys.D) || Gdx.input.isKeyPressed(Input.Keys.RIGHT);
     }
     public static boolean isInteractPressed(){
-        return Gdx.input.isKeyPressed(Input.Keys.E);
+        return Gdx.input.isKeyJustPressed(Input.Keys.E);
     }
     public static boolean isPausedPressed(){
         return Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
     }
-    public static boolean isInventoryPressed(){
-        return Gdx.input.isKeyPressed(Input.Keys.I);
+    public static boolean isInventoryTogglePressed() {
+        return Gdx.input.isKeyJustPressed(Input.Keys.I);
     }
 }

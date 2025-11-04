@@ -17,9 +17,9 @@ public class CollisionManager {
         }
 
         // Add interactables bounds here
-        MapLayer interactableLayer = tiledMap.getLayers().get("Interactables");
+        MapLayer interactableLayer = tiledMap.getLayers().get("Lootables");
         for (MapObject object : interactableLayer.getObjects()){
-            if ("loot_spawn".equals(object.getProperties().get("type", String.class))){
+            if ("loot_node".equals(object.getProperties().get("type", String.class))){
                 // Ignore all loot_spawn interactable objects. No collision, just interactable.
                 continue;
             }

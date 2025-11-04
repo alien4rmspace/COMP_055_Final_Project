@@ -3,21 +3,23 @@ package FinalProject.Interactables;
 import FinalProject.Loot.Item;
 import FinalProject.Loot.LootTable;
 import FinalProject.Managers.LootTableManager;
+import FinalProject.Managers.SoundManager;
 import FinalProject.Player.Player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class LootContainer implements Interactable {
+public class LootContainer implements Interactable, Pickable {
     private Rectangle rectangle;
     private LootTable lootTable;
     private ContainerType containerType;
-    private boolean locked;
+    private float lockLevel;
+    private boolean isLocked;
     private boolean opened;
 
     public LootContainer(Rectangle bounds, String containerType){
         this.rectangle = bounds;
-        this.locked = false;
+        this.isLocked = false;
         this.opened = false;
 
         switch (containerType){
@@ -43,7 +45,8 @@ public class LootContainer implements Interactable {
     public boolean canInteract(Player player) {
         // Expand player rectangle to account for knockback knocking player out of reach.
         Rectangle expanded = new Rectangle(player.getBounds());
-        expanded.setSize(expanded.width + 15, expanded.height + 15); // Grow by 15 px each way
+        int expandAmount = 15;
+        expanded.setSize(expanded.width + expandAmount, expanded.height + expandAmount); // Grow by 15 px each way
         expanded.setCenter(player.getBounds().x + player.getBounds().width / 2,
             player.getBounds().y + player.getBounds().height / 2);  // Account for rectangle growing not from the center.
 
@@ -67,6 +70,11 @@ public class LootContainer implements Interactable {
     }
 
     @Override
+    public float getLockLevel(){
+        return lockLevel;
+    }
+
+    @Override
     public Rectangle getRectangle() {
         return rectangle;
     }
@@ -75,5 +83,9 @@ public class LootContainer implements Interactable {
         if (!opened) {
             batch.draw(texture, rectangle.x, rectangle.y);
         }
+    }
+    public void unlock(){
+        this.isLocked = false;
+        SoundManager.play("lock_picked");
     }
 }

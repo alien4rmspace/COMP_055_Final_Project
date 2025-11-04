@@ -1,11 +1,19 @@
 package FinalProject.Player;
 
 import FinalProject.CharacterState;
+import FinalProject.FootstepSFX;
+import FinalProject.Interactables.Door;
+import FinalProject.LockPickInteraction;
 import FinalProject.Managers.AnimationManager;
 import FinalProject.Managers.CollisionManager;
+import FinalProject.Managers.TextureManager;
+import FinalProject.UIUtilities;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
@@ -15,6 +23,8 @@ import static java.lang.Math.min;
 public class Player {
     private final CollisionManager collisionManager;
     private final Rectangle collisionRectangle;
+    private final Inventory inventory;
+    private final PlayerStats stats;
 
     private Animation<TextureRegion> animation;
     private final Animation<TextureRegion> idleAnimationUp;
@@ -31,14 +41,16 @@ public class Player {
     private final Vector2 lastDirection;
 
     private CharacterState currentState;
-    private float speed = 200f;
+    private float speed = 150f;
     private float stateTime = 0;
 
     public Player(float x, float y, CollisionManager collisionManager) {
         this.collisionManager = collisionManager;
-        this.collisionRectangle = new Rectangle(x, y, 38, 42); // Soz for the magic numbers.
+        this.collisionRectangle = new Rectangle(x, y, 47, 42); // Soz for the magic numbers.
+        this.stats = PlayerStatsIO.load();
+        this.inventory = new Inventory(20);
 
-        String characterModel = "Amanda";
+        String characterModel = "Amanda";   // Easy way to change characterModel.
         this.idleAnimationUp = AnimationManager.get(characterModel + ".standing.up");
         this.idleAnimationRight = AnimationManager.get(characterModel + ".standing.right");
         this.idleAnimationLeft = AnimationManager.get(characterModel + ".standing.left");
@@ -59,6 +71,7 @@ public class Player {
         TextureRegion frame = animation.getKeyFrame(stateTime, true);
         spriteBatch.draw(frame, this.position.x, this.position.y);
     }
+
 
     public void update(float delta){
         this.stateTime += delta;
@@ -95,6 +108,9 @@ public class Player {
         // Move the player
         normalize(velocity);
         move(velocity, speed, delta);
+
+        // Play foosteps
+        FootstepSFX.playWalk(speed, delta);
     }
 
     public void normalize(Vector2 vector2){
@@ -191,7 +207,17 @@ public class Player {
         }
     }
 
+    public Vector2 getPosition(){
+        return this.position;
+    }
+
     public Rectangle getBounds() {
         return collisionRectangle;
+    }
+    public Inventory getInventory() {
+        return inventory;
+    }
+    public PlayerStats getStats() {
+        return stats;
     }
 }

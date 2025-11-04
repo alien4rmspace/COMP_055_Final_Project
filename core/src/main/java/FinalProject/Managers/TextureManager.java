@@ -15,6 +15,14 @@ public class TextureManager {
         load("Amanda", "Characters/Amanda.png");
         load("pizza", "Textures/Pizza.png");
 
+        load("ui", "Textures/Inventory.png");
+
+        int totalUIButtons = 763;
+        for (int i = 1; i <= totalUIButtons; i++) {
+            String UIName = "UI-" + i;
+            load(UIName, "Textures/User_Interface/Buttons/" + UIName + ".png");
+        }
+
         System.out.println("Successfully loaded textures in TextureManager");
     }
 
