@@ -1631,8 +1631,26 @@ Character_Generator/Smartphones/48x48/Smartphone_48x48_5.png
 Character_Generator/Smartphones/Smartphones_ase/Smartphones.aseprite
 Character_Generator/Spritesheet_animations_GUIDE.png
 Characters/Amanda.png
-Characters/Premade_Character_48x48_03.png
+Characters/B Han.png
+Characters/Bill Kirkland.png
+Characters/Budah B Withu.png
+Characters/Colonel Chicken.png
+Characters/Cop.png
+Characters/Damian Wayne.png
+Characters/Fardeen Yager.png
+Characters/Heisenberg.png
+Characters/Majin Who.png
+Characters/Mr.Moncler.png
+Characters/Phun Winning.png
+Characters/Sprinkly.png
+Characters/Sum Ting Wong.png
+Characters/YN.png
+Characters/character3.png
+Fonts/boldpixels.ttf
 Fonts/rainyhearts.ttf
+Loading Bar.png
+Loading Fill.png
+Loading Screen BG.png
 Sounds/Footsteps/Dirt/Steps_dirt-001.ogg
 Sounds/Footsteps/Dirt/Steps_dirt-002.ogg
 Sounds/Footsteps/Dirt/Steps_dirt-003.ogg
@@ -2430,9 +2448,23 @@ Textures/User_Interface/Buttons/UI-98.png
 Textures/User_Interface/Buttons/UI-99.png
 Textures/User_Interface/Buttons/_Template.png
 TiledMaps/11_Camping_48x48.png
+TiledMaps/12_Kitchen_48x48.png
+TiledMaps/1_Generic_48x48.png
 TiledMaps/1_Terrains_and_Fences_48x48.png
+TiledMaps/2_LivingRoom_48x48.png
+TiledMaps/4_Bedroom_48x48.png
+TiledMaps/Generic_Home_1_preview_48x48.png
+TiledMaps/Room_Builder_3d_walls_48x48.png
+TiledMaps/Room_Builder_Floor_Shadows_48x48.png
+TiledMaps/Room_Builder_Floors_48x48.png
+TiledMaps/Room_Builder_Walls_48x48.png
+TiledMaps/Room_Builder_baseboards_48x48.png
+TiledMaps/Room_Builder_borders_48x48.png
 TiledMaps/Tileset_15_MV.png
 TiledMaps/Tileset_18_MV.png
 TiledMaps/Tileset_4_MV.png
+TiledMaps/common_room_1.tmx
+TiledMaps/common_room_2.tmx
 TiledMaps/rural.tmx
+manifests/textures.json
 particle_effects.png

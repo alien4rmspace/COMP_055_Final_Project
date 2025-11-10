@@ -19,6 +19,10 @@ public class UserInputs {
     public static boolean isInteractPressed(){
         return Gdx.input.isKeyJustPressed(Input.Keys.E);
     }
+
+    public static boolean isLeftMouseButtonPressed() {
+        return Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+    }
     public static boolean isPausedPressed(){
         return Gdx.input.isKeyPressed(Input.Keys.ESCAPE);
     }

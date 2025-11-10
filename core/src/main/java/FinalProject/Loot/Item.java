@@ -5,12 +5,18 @@ public class Item {
     private final float itemPrice;
     private final float itemWeight;
     private final int amount;
+    private final String iconName;
 
-    public Item(String name, float itemPrice, float itemWeight, int amount) {
+    public Item(String name, float itemPrice, float itemWeight, int amount, String iconName) {
         this.name = name;
         this.itemPrice = itemPrice;
         this.itemWeight = itemWeight;
         this.amount = amount;
+        this.iconName = iconName;
+    }
+    
+    public Item(String name, float itemPrice, float itemWeight, int amount) {
+        this(name, itemPrice, itemWeight, amount, name);
     }
 
     public String getName() {
@@ -24,5 +30,8 @@ public class Item {
     }
     public int getAmount() {
         return amount;
+    }
+    public String getIconName() {
+        return iconName;
     }
 }

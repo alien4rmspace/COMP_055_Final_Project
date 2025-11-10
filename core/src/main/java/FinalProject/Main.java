@@ -1,46 +1,50 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package FinalProject;
 
 import FinalProject.Screens.GameScreen;
 import FinalProject.Screens.LoadingScreen;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
-import java.util.Stack;
-
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
-    private LoadingScreen  loadingScreen;
+    private LoadingScreen loadingScreen;
     private GameScreen gameScreen;
 
-    @Override
     public void create() {
-        loadingScreen = new LoadingScreen(this);
-        setScreen(loadingScreen);
-	}
+        // Start with the loading screen first
+        this.loadingScreen = new LoadingScreen(this);
+        this.setScreen(this.loadingScreen);
+    }
 
-    @Override
     public void dispose() {
+        super.dispose(); // Added to properly clean up resources
     }
 
-    public void showMainScreen(){
-        //setScreen(gameScreen);
+    public void showMainScreen() {
+        // Not implemented yet, placeholder for future main menu
     }
-    public void showLoadingScreen(){
-        if (loadingScreen == null){
-            loadingScreen = new LoadingScreen(this);
+
+    public void showLoadingScreen() {
+        if (this.loadingScreen == null) {
+            this.loadingScreen = new LoadingScreen(this);
         }
+        // Make sure to actually switch to the loading screen
+        this.setScreen(this.loadingScreen);
     }
 
-    public void showGameScreen(){
-        if (gameScreen == null){
-            gameScreen = new GameScreen(this);
+    public void showGameScreen() {
+        if (this.gameScreen == null) {
+            this.gameScreen = new GameScreen(this, (new TmxMapLoader()).load("TiledMaps/rural.tmx"));
         }
-        setScreen(gameScreen);
+
+        this.setScreen(this.gameScreen);
     }
 
-    public void returnToMenuScreen(){
-        // TODO
+    public void returnToMenuScreen() {
+        // Placeholder for future return to menu logic
     }
 }
-
-

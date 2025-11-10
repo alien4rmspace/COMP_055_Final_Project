@@ -1,6 +1,6 @@
 package FinalProject.Loot;
 
-import FinalProject.MaterialType;
+import FinalProject.Enums.MaterialType;
 
 // Holds the Loot items constraints that will go into item.
 public class LootItem {

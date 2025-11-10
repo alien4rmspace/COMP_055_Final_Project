@@ -1,26 +1,22 @@
 package FinalProject.Player;
 
-import FinalProject.CharacterState;
+import FinalProject.Enums.CharacterState;
 import FinalProject.FootstepSFX;
-import FinalProject.Interactables.Door;
-import FinalProject.LockPickInteraction;
+import FinalProject.Interactables.Characters.Character;
 import FinalProject.Managers.AnimationManager;
 import FinalProject.Managers.CollisionManager;
-import FinalProject.Managers.TextureManager;
-import FinalProject.UIUtilities;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
+import FinalProject.Screens.GameScreen;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
-public class Player {
+public class Player implements Character {
+    private final GameScreen gameScreen;
     private final CollisionManager collisionManager;
     private final Rectangle collisionRectangle;
     private final Inventory inventory;
@@ -41,13 +37,20 @@ public class Player {
     private final Vector2 lastDirection;
 
     private CharacterState currentState;
-    private float speed = 150f;
+    private boolean isMoving;
+    private float speed;
     private float stateTime = 0;
 
-    public Player(float x, float y, CollisionManager collisionManager) {
+    public Player(Vector2 vector2, GameScreen gameScreen, CollisionManager collisionManager) {
+        this.gameScreen = gameScreen;
         this.collisionManager = collisionManager;
-        this.collisionRectangle = new Rectangle(x, y, 47, 42); // Soz for the magic numbers.
+        this.collisionRectangle = new Rectangle(vector2.x+2, vector2.y, 44, 42); // Soz for the magic numbers.
+
+        this.speed = 115f;
+
         this.stats = PlayerStatsIO.load();
+        updateStats(); // Update player's stats to the player class.
+
         this.inventory = new Inventory(20);
 
         String characterModel = "Amanda";   // Easy way to change characterModel.
@@ -62,13 +65,18 @@ public class Player {
 
         this.animation = idleAnimationDown;
 
-        this.position = new Vector2(x, y);
+        this.position = vector2;
         this.velocity = new Vector2(0f, 0f);
         this.lastDirection = new Vector2(0f,0f);
     }
 
+    @Override
+    public Rectangle getCollisionRectangle() {
+        return collisionRectangle;
+    }
+
     public void draw(SpriteBatch spriteBatch){
-        TextureRegion frame = animation.getKeyFrame(stateTime, true);
+        TextureRegion frame = animation.getKeyFrame(stateTime * (stats.getDexterity() / 5f + 1), true);
         spriteBatch.draw(frame, this.position.x, this.position.y);
     }
 
@@ -95,7 +103,7 @@ public class Player {
         if (velocity.isZero()){
             if (this.currentState != CharacterState.IDLE){
                 this.currentState = CharacterState.IDLE;
-                updateIdleAnimation();
+                updateToIdleAnimation();
             }
             return;
         }
@@ -103,15 +111,15 @@ public class Player {
         // Execute code if trying to move
         this.currentState = CharacterState.WALKING;
         this.lastDirection.set(this.velocity.x, this.velocity.y);   //Lets our animation know which way player is facing.
-        updateMovementAnimation(); //Updates which animations to play based on player's velocity.
+        updateToMovementAnimation(); //Updates which animations to play based on player's velocity.
 
         // Move the player
         normalize(velocity);
         move(velocity, speed, delta);
 
         // Play foosteps
-        FootstepSFX.playWalk(speed, delta);
-    }
+        if (isMoving) { FootstepSFX.playWalk(speed, delta); }
+        }
 
     public void normalize(Vector2 vector2){
         float length = (float)Math.sqrt(vector2.x * vector2.x + vector2.y * vector2.y);
@@ -153,19 +161,24 @@ public class Player {
         float oldY = position.y;
 
         // Move
+        isMoving = true;
         position.add(movement);
         collisionRectangle.setPosition(position.x, position.y);
 
         // Check collision
-        if (collisionManager.isCollide(collisionRectangle)) {
+        if (collisionManager.isCollide(this)) {
             // revert position if collided
             position.set(oldX, oldY);
             collisionRectangle.setPosition(position.x, position.y);
+
+            // No longer moving.
+            isMoving = false;
+            updateToIdleAnimation();
         }
     }
 
     // Velocity check to change state and animation
-    private void updateMovementAnimation(){
+    private void updateToMovementAnimation(){
         if(this.velocity.y > 0){
             // Moving Up
             this.animation = walkAnimationUp;
@@ -185,9 +198,10 @@ public class Player {
         }
     }
 
-    private void updateIdleAnimation(){
-        // Velocity check to change state and animation
+    private void updateToIdleAnimation(){
+        isMoving = false;
 
+        // Velocity check to change state and animation
         if(this.lastDirection.y > 0){
             // Idle Up
             this.animation = idleAnimationUp;
@@ -207,6 +221,10 @@ public class Player {
         }
     }
 
+    public Vector2 getLastDirection(){
+        return this.lastDirection;
+    }
+
     public Vector2 getPosition(){
         return this.position;
     }
@@ -214,10 +232,22 @@ public class Player {
     public Rectangle getBounds() {
         return collisionRectangle;
     }
+
+    public GameScreen getGameScreen() { return this.gameScreen; }
+
     public Inventory getInventory() {
         return inventory;
     }
+
+    public boolean isMoving(){
+        return isMoving;
+    }
+
     public PlayerStats getStats() {
         return stats;
+    }
+
+    public void updateStats(){
+        this.speed = this.speed * (stats.getDexterity() / 10f + 1);
     }
 }

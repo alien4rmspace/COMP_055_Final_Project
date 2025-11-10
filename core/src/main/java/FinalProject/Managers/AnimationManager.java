@@ -1,5 +1,6 @@
 package FinalProject.Managers;
 
+import FinalProject.Enums.CharacterId;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -12,7 +13,8 @@ public class AnimationManager {
 
     public static void init(){
         TextureRegion[] animationFrames;
-        float animationFrameDuration = 0.14f;
+        String name;
+        float animationFrameDuration = 0.22f;
         // Parse our sprite sheet in a 48 x 96 section starting at row 2, there are 6 animation frames in that row.
         animationFrames = parseRegion(TextureManager.get("character3"), 48, 96, 2, 0 , 6);
         animations.put("player.walking.right", new Animation<>(animationFrameDuration, animationFrames));
@@ -51,6 +53,26 @@ public class AnimationManager {
         animations.put("Amanda.standing.left", new Animation<>(animationFrameDuration, animationFrames));
         animationFrames = parseRegion(TextureManager.get("Amanda"), 48, 96, 1, 19, 24);
         animations.put("Amanda.standing.down", new Animation<>(animationFrameDuration, animationFrames));
+
+        // Mr.Moncler's Animation
+        name = CharacterId.MR_MONCLER.name;
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 2, 0 , 6);
+        animations.put(name + ".walking.right", new Animation<>(animationFrameDuration, animationFrames));
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 2, 7, 12);
+        animations.put(name + ".walking.up", new Animation<>(animationFrameDuration, animationFrames));
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 2, 13 , 18);
+        animations.put(name + ".walking.left", new Animation<>(animationFrameDuration, animationFrames));
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 2, 19 , 24);
+        animations.put(name + ".walking.down", new Animation<>(animationFrameDuration, animationFrames));
+        // Idle Animation
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 1, 0, 6);
+        animations.put(name + ".standing.right", new Animation<>(animationFrameDuration, animationFrames));
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 1, 7, 12);
+        animations.put(name + ".standing.up", new Animation<>(animationFrameDuration, animationFrames));
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 1, 13, 18);
+        animations.put(name + ".standing.left", new Animation<>(animationFrameDuration, animationFrames));
+        animationFrames = parseRegion(TextureManager.get(name), 48, 96, 1, 19, 24);
+        animations.put(name + ".standing.down", new Animation<>(animationFrameDuration, animationFrames));
 
         System.out.println("Successfully loaded animations in AnimationManager");
     }
